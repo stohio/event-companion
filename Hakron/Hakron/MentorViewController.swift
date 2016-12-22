@@ -1,5 +1,5 @@
 //
-//  Jelly.swift
+//  MentorViewController.swift
 //  Hakron
 //
 //  Created by Aron Gates on 12/22/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class JellyViewController: UIViewController {
+class MentorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

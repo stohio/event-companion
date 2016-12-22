@@ -25,12 +25,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-18" y="37"/>
+            <point key="canvasLocation" x="-178" y="37"/>
         </scene>
-        <!--Jelly View Controller-->
+        <!--Count View Controller-->
         <scene sceneID="NCo-bh-v4t">
             <objects>
-                <viewController storyboardIdentifier="JellyViewController" id="l0C-gv-fbi" customClass="JellyViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CountViewController" id="l0C-gv-fbi" customClass="CountViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5ot-HJ-PET"/>
                         <viewControllerLayoutGuide type="bottom" id="XVu-HV-Ezw"/>
@@ -43,7 +43,43 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iff-F4-wAn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-898" y="791"/>
+            <point key="canvasLocation" x="516" y="36"/>
+        </scene>
+        <!--Schedule View Controller-->
+        <scene sceneID="iVg-ke-cvb">
+            <objects>
+                <viewController storyboardIdentifier="ScheduleViewController" id="7bM-QB-dhr" customClass="ScheduleViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Tw7-bo-ygm"/>
+                        <viewControllerLayoutGuide type="bottom" id="nt5-kE-wR9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="e09-ER-MD1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.83615561548223349" green="0.70638508303978464" blue="0.55450720367017869" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2gT-Az-zYP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1218" y="36"/>
+        </scene>
+        <!--Mentor View Controller-->
+        <scene sceneID="A6j-lk-yje">
+            <objects>
+                <viewController storyboardIdentifier="MentorViewController" id="INW-N8-Mw3" customClass="MentorViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mck-Wh-3ms"/>
+                        <viewControllerLayoutGuide type="bottom" id="UCa-gi-235"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lmI-zt-20P">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.75096340935271799" green="0.95723841570729573" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MH9-De-UW3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1911" y="36"/>
         </scene>
         <!--Left View Controller-->
         <scene sceneID="vqE-92-yPH">

@@ -24,8 +24,8 @@ class LeftViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        menus = ["Main", "Jelly"]
-        viewControllersIDs = ["MainViewController", "JellyViewController"]
+        menus = ["Event Feed", "Countdown", "Schedule", "Mentor"]
+        viewControllersIDs = ["MainViewController", "CountViewController", "ScheduleViewController", "MentorViewController"]
         
         self.tableView.separatorColor = UIColor(red: 224/255, green: 224/255, blue: 224/255, alpha: 1.0)
         

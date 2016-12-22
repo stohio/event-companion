@@ -11,6 +11,8 @@
 		0A750BAE1E0C72F000765D55 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A750BAC1E0C72F000765D55 /* Main.storyboard */; };
 		0A750BB01E0C72F000765D55 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A750BAF1E0C72F000765D55 /* Assets.xcassets */; };
 		0A750BB31E0C72F000765D55 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A750BB11E0C72F000765D55 /* LaunchScreen.storyboard */; };
+		0A88EA091E0C9C3E0023DC9A /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88EA081E0C9C3E0023DC9A /* ScheduleViewController.swift */; };
+		0A88EA0B1E0C9C8D0023DC9A /* MentorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A88EA0A1E0C9C8D0023DC9A /* MentorViewController.swift */; };
 		0ACF216A1E0C8D5900EE09E6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF21691E0C8D5900EE09E6 /* MainViewController.swift */; };
 		0ACF216D1E0C8DB800EE09E6 /* ExSlideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF216B1E0C8DB800EE09E6 /* ExSlideMenuController.swift */; };
 		0ACF216E1E0C8DB800EE09E6 /* LeftViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF216C1E0C8DB800EE09E6 /* LeftViewController.swift */; };
@@ -27,7 +29,7 @@
 		0AF489871E0C92DD0046A95A /* ImageHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF489851E0C92DD0046A95A /* ImageHeaderView.swift */; };
 		0AF489881E0C92DD0046A95A /* ImageHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AF489861E0C92DD0046A95A /* ImageHeaderView.xib */; };
 		0AF4898A1E0C93DA0046A95A /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF489891E0C93DA0046A95A /* UIViewController.swift */; };
-		0AF4898C1E0C94270046A95A /* JellyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4898B1E0C94270046A95A /* JellyViewController.swift */; };
+		0AF4898C1E0C94270046A95A /* CountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF4898B1E0C94270046A95A /* CountViewController.swift */; };
 		A515664731411591BA882834 /* Pods_Hakron.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B527331DA729F5F99A3B2809 /* Pods_Hakron.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +40,8 @@
 		0A750BAF1E0C72F000765D55 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0A750BB21E0C72F000765D55 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0A750BB41E0C72F000765D55 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0A88EA081E0C9C3E0023DC9A /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		0A88EA0A1E0C9C8D0023DC9A /* MentorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MentorViewController.swift; path = ../MentorViewController.swift; sourceTree = "<group>"; };
 		0ACF21691E0C8D5900EE09E6 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		0ACF216B1E0C8DB800EE09E6 /* ExSlideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExSlideMenuController.swift; sourceTree = "<group>"; };
 		0ACF216C1E0C8DB800EE09E6 /* LeftViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftViewController.swift; sourceTree = "<group>"; };
@@ -54,7 +58,7 @@
 		0AF489851E0C92DD0046A95A /* ImageHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageHeaderView.swift; sourceTree = "<group>"; };
 		0AF489861E0C92DD0046A95A /* ImageHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageHeaderView.xib; sourceTree = "<group>"; };
 		0AF489891E0C93DA0046A95A /* UIViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
-		0AF4898B1E0C94270046A95A /* JellyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JellyViewController.swift; sourceTree = "<group>"; };
+		0AF4898B1E0C94270046A95A /* CountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountViewController.swift; sourceTree = "<group>"; };
 		740FB23E5FCEAAC303C916C3 /* Pods-Hakron.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hakron.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hakron/Pods-Hakron.debug.xcconfig"; sourceTree = "<group>"; };
 		B527331DA729F5F99A3B2809 /* Pods_Hakron.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hakron.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBE94AF2F8A159290EF9DB7C /* Pods-Hakron.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hakron.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hakron/Pods-Hakron.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,7 +116,9 @@
 				0ACF21691E0C8D5900EE09E6 /* MainViewController.swift */,
 				0ACF216C1E0C8DB800EE09E6 /* LeftViewController.swift */,
 				0ACF216B1E0C8DB800EE09E6 /* ExSlideMenuController.swift */,
-				0AF4898B1E0C94270046A95A /* JellyViewController.swift */,
+				0AF4898B1E0C94270046A95A /* CountViewController.swift */,
+				0A88EA081E0C9C3E0023DC9A /* ScheduleViewController.swift */,
+				0A88EA0A1E0C9C8D0023DC9A /* MentorViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -297,8 +303,10 @@
 			files = (
 				0ACF21851E0C8F0000EE09E6 /* UIView.swift in Sources */,
 				0ACF21801E0C8F0000EE09E6 /* UIApplication.swift in Sources */,
+				0A88EA091E0C9C3E0023DC9A /* ScheduleViewController.swift in Sources */,
+				0A88EA0B1E0C9C8D0023DC9A /* MentorViewController.swift in Sources */,
 				0AF489871E0C92DD0046A95A /* ImageHeaderView.swift in Sources */,
-				0AF4898C1E0C94270046A95A /* JellyViewController.swift in Sources */,
+				0AF4898C1E0C94270046A95A /* CountViewController.swift in Sources */,
 				0ACF21821E0C8F0000EE09E6 /* UIImage.swift in Sources */,
 				0ACF216A1E0C8D5900EE09E6 /* MainViewController.swift in Sources */,
 				0ACF21841E0C8F0000EE09E6 /* UITableViewExtension.swift in Sources */,
