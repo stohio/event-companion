@@ -1,6 +1,7 @@
 package io.stoh.hackcompanion;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,7 +26,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-public class WelcomeActivitiy extends AppCompatActivity {
+public class WelcomeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,9 @@ public class WelcomeActivitiy extends AppCompatActivity {
         final String token = url.substring(url.indexOf("token/") + 6);
         Log.d("TOKEN", token);
 
-        TextView tvCode = (TextView) findViewById(R.id.tv_code);
-        tvCode.setText(url);
+        SharedPreferences settings = getSharedPreferences("HackCompanion", 0);
+        settings.edit().putString("myMLHToken", token).apply();
+
 
         TextView tvToken = (TextView) findViewById(R.id.tv_token);
         tvToken.setText(token);

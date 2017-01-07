@@ -1,12 +1,13 @@
 package io.stoh.hackcompanion;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,13 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private String myMLHToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +48,30 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        myMLHToken = getMyMLHToken();
+
+        if (myMLHToken == null) {
+/*            new AlertDialog.Builder(getApplicationContext())
+                    .setTitle("Unable to Load My MLH Profile")
+                    .setMessage("Something went wrong.  The app will now close.")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();*/
+        }
+        else {
+
+            Toast.makeText(getApplicationContext(), myMLHToken, Toast.LENGTH_LONG).show();
+        }
+
+
     }
+
+
 
     @Override
     public void onBackPressed() {
@@ -112,7 +133,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void authenticateMyMLH(View view) throws IOException {
+    public void authenticateMyMLH() {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("https://my.mlh.io/oauth/authorize?client_id="
                         + getResources().getString(R.string.my_mlh_app_id)
@@ -120,6 +141,21 @@ public class MainActivity extends AppCompatActivity
                         + Uri.encode(getResources().getString(R.string.my_mlh_callback_url))
                         + "&response_type=token"));
         startActivity(browserIntent);
+
+    }
+
+    public String getMyMLHToken() {
+        SharedPreferences settings = getSharedPreferences("HackCompanion", 0);
+        String myMLHToken = settings.getString("myMLHToken", null);
+
+        if (myMLHToken == null) {
+            authenticateMyMLH();
+            return null;
+        }
+
+        return myMLHToken;
+
+
 
     }
 }

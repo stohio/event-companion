@@ -25,7 +25,7 @@
 
         </activity>
         <activity
-            android:name=".WelcomeActivitiy"
+            android:name=".WelcomeActivity"
             android:label="@string/title_activity_welcome_activitiy"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
