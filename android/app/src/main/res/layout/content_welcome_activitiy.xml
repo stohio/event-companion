@@ -14,22 +14,13 @@
     tools:showIn="@layout/activity_welcome_activitiy">
 
     <TextView
-        android:text="Code"
+        android:text="Token"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="62dp"
-        android:id="@+id/tv_code" />
-
-    <TextView
-        android:text="Token"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_token"
-        android:layout_below="@+id/tv_code"
-        android:layout_alignStart="@+id/tv_code"
-        android:layout_marginTop="123dp" />
+        android:id="@+id/tv_token" />
 
     <TextView
         android:text="ID"

@@ -113,9 +113,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void authenticateMyMLH(View view) throws IOException {
-        String appId = "664be6f8c0d9f8098c83f56454c3fa5abfe507514d8304b044163ff8b3cfb783";
-        String secret = "50ae87bd735d40c6005817d1bd30f848ddc0016249d925d8960e64e9264d36d2";
-        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://my.mlh.io/oauth/authorize?client_id=" + appId + "&redirect_uri=" + "http%3A%2F%2Fstoh.io%2Foauth%2Fcallback.html" + "&response_type=code"));
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse("https://my.mlh.io/oauth/authorize?client_id="
+                        + getResources().getString(R.string.my_mlh_app_id)
+                        + "&redirect_uri="
+                        + Uri.encode(getResources().getString(R.string.my_mlh_callback_url))
+                        + "&response_type=token"));
         startActivity(browserIntent);
 
     }
