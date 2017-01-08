@@ -129,7 +129,8 @@ public  class MyMLHUser extends Observable {
 
     /**
      * Initialization Function for MyMLHUser.  Gives Class context in order to be able to
-     * load local User Data if it is stored
+     * load local User Data if it is stored.  Should be executed in first use of Class after
+     * adding it as an observer.
      * @param context Application Context
      */
     public void init(Context context) {

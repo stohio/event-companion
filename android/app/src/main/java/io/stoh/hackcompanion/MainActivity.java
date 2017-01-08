@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //////////////////////////////////////////////////////////////////////////////////////////
-        myMLHUser.init(getApplicationContext());
         myMLHUser.addObserver(this);
+        myMLHUser.init(getApplicationContext());
         Log.d("Observers", Integer.toString(myMLHUser.countObservers()));
         getMyMLHUserProfile();
 
