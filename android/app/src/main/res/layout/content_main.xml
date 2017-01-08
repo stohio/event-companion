@@ -14,11 +14,11 @@
     tools:showIn="@layout/app_bar_main">
 
     <Button
-        android:text="Authenticate My MLH"
+        android:text="Remove Token"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:id="@+id/button"
-        android:onClick="authenticateMyMLH" />
+        android:onClick="removeToken" />
 </RelativeLayout>

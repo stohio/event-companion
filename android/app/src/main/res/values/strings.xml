@@ -83,5 +83,6 @@
     <!-- My MLH Info -->
     <string name="my_mlh_app_id">664be6f8c0d9f8098c83f56454c3fa5abfe507514d8304b044163ff8b3cfb783</string>
     <string name="my_mlh_callback_url">http://stoh.io/oauth/callback.html</string>
+    <string name="my_mlh_msg">Hack Companion uses My MLH.  In order to use the app, you must Authorize it My MLH first.  Click Ok to sign in and authorize the app.</string>
 
 </resources>
