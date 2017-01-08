@@ -1,5 +1,7 @@
 package io.stoh.hackcompanion;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -29,7 +31,9 @@ public  class MyMLHUser extends Observable {
         return INSTANCE;
     }
 
+
     //Object Model for JSON -> GSON Object.  Models GET user response Object
+    //TODO fix lastname, firstname, etc to match JSON underscore versions
     public static class MyMLHUserObject {
         private String status;
         private Data data;
@@ -118,6 +122,28 @@ public  class MyMLHUser extends Observable {
     //Token to authenticate
     private String myMLHToken;
 
+    //Context used to load SharedPreferences
+    private Context context;
+    private SharedPreferences settings;
+
+
+    /**
+     * Initialization Function for MyMLHUser.  Gives Class context in order to be able to
+     * load local User Data if it is stored
+     * @param context Application Context
+     */
+    public void init(Context context) {
+        this.context = context;
+        settings = context.getSharedPreferences("HackCompanion", 0);
+        String userJson = settings.getString("myMLHUser", null);
+        if (userJson != null) {
+            Log.d("MyMLHUser", "Loading Stored JSON Data");
+            MyMLHUserObject userObject = new Gson().fromJson(userJson, MyMLHUserObject.class);
+            setData(userObject);
+        }
+
+    }
+
     /**
      * Sets new token and updates User information using new token.
      * @param newToken the new Authentication Token
@@ -169,12 +195,22 @@ public  class MyMLHUser extends Observable {
 
     /**
      * Sets MyMLH User Data and Notifies Observers.  ALl data is overwritten with new
-     * Object's data
+     * Object's data and is saved locally if possible
      * @param object the new Data to set
      */
     private void setData(MyMLHUserObject object) {
         Log.d("MyMLHUser", "setData");
         userObject = object;
+
+        if(context != null && settings != null) {
+            Log.d("MyMLHUser", "Saving User Data Locally");
+            String userJson = new Gson().toJson(object);
+            settings.edit().putString("myMLHUser", userJson).apply();
+        }
+        else {
+            Log.e("MyMLHUser", "Unable to Save User Data Locally");
+        }
+
         setChanged();
         notifyObservers();
     }

@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //////////////////////////////////////////////////////////////////////////////////////////
-
+        myMLHUser.init(getApplicationContext());
         myMLHUser.addObserver(this);
         Log.d("Observers", Integer.toString(myMLHUser.countObservers()));
         getMyMLHUserProfile();
@@ -151,6 +151,9 @@ public class MainActivity extends AppCompatActivity
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
         Log.d("MainActivity", "Added request");
+
+        String id = Integer.toString(myMLHUser.getData().getData().getId());
+        Toast.makeText(this, id, Toast.LENGTH_LONG).show();
 
     }
 
