@@ -30,11 +30,14 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Observer {
     private String myMLHToken;
+    private MyMLHUser myMLHUser = MyMLHUser.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +77,8 @@ public class MainActivity extends AppCompatActivity
 
         //////////////////////////////////////////////////////////////////////////////////////////
 
+        myMLHUser.addObserver(this);
+        Log.d("Observers", Integer.toString(myMLHUser.countObservers()));
         getMyMLHUserProfile();
 
     }
@@ -141,40 +146,30 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void getMyMLHUserProfile() {
-        Log.d("UserProfile", "Token Used: " + myMLHToken);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                "https://my.mlh.io/api/v2/user.json",
-                new Response.Listener<String>() {
-                    public void onResponse(String response) {
-                        Toast.makeText(getApplicationContext(), response,
-                                Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getApplicationContext(), error.toString(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            protected Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<>();
-                return params;
-            }
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + myMLHToken);
-                return headers;
-            }
-
-        };
-
+        Log.d("MainActivity", "Getting User Profile");
+        StringRequest request = myMLHUser.updateUser(myMLHToken);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        requestQueue.add(request);
+        Log.d("MainActivity", "Added request");
+
     }
 
     public void removeToken(View view) {
         SharedPreferences settings = getSharedPreferences("HackCompanion", 0);
         settings.edit().remove("myMLHToken").apply();
         finishAffinity();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        Log.d("Observable", "Observer Notified!");
+        if (o.getClass().equals(MyMLHUser.class)) {
+            String schoolName = myMLHUser.getData().getData().getSchool().getName();
+            Log.d("School Name", schoolName);
+            Toast.makeText(this, schoolName, Toast.LENGTH_LONG).show();
+        }
+        else {
+            Log.d("Observable Update", "Something Went Wrong");
+        }
     }
 }
