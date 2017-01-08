@@ -44,7 +44,7 @@ public class TokenActivity extends AppCompatActivity {
 
         Toast.makeText(getApplicationContext(), "My MLH Authenticated!", Toast.LENGTH_LONG).show();
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoaderActivity.class);
         intent.putExtra("myMLHToken", myMLHToken);
         startActivity(intent);
 

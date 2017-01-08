@@ -1,13 +1,10 @@
 package io.stoh.hackcompanion;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -18,18 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -49,6 +35,7 @@ public class MainActivity extends AppCompatActivity
         if (myMLHToken == null) {
             finishAffinity();
         }
+
 
         //////////////////////////////////////////////////////////////////////////////////////////
         //Load Views and etc.
@@ -75,11 +62,17 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+
+        if (getIntent().getBooleanExtra("myMLHUserDataLoadedFromLocal", false)) {
+            Snackbar.make(drawer, "App Offline", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+        }
+
+
         //////////////////////////////////////////////////////////////////////////////////////////
         myMLHUser.addObserver(this);
-        myMLHUser.init(getApplicationContext());
-        Log.d("Observers", Integer.toString(myMLHUser.countObservers()));
-        getMyMLHUserProfile();
+
 
     }
 
@@ -145,18 +138,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void getMyMLHUserProfile() {
-        Log.d("MainActivity", "Getting User Profile");
-        StringRequest request = myMLHUser.updateUser(myMLHToken);
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(request);
-        Log.d("MainActivity", "Added request");
-
-        String id = Integer.toString(myMLHUser.getData().getData().getId());
-        Toast.makeText(this, id, Toast.LENGTH_LONG).show();
-
-    }
-
     public void removeToken(View view) {
         SharedPreferences settings = getSharedPreferences("HackCompanion", 0);
         settings.edit().remove("myMLHToken").apply();
@@ -165,14 +146,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void update(Observable o, Object arg) {
-        Log.d("Observable", "Observer Notified!");
+        Log.d("MainActivity", "Observer > Notified");
         if (o.getClass().equals(MyMLHUser.class)) {
-            String schoolName = myMLHUser.getData().getData().getSchool().getName();
-            Log.d("School Name", schoolName);
-            Toast.makeText(this, schoolName, Toast.LENGTH_LONG).show();
+            updateUserData();
+
         }
         else {
-            Log.d("Observable Update", "Something Went Wrong");
+            Log.d("MainActivity", "Observer > Something Went Wrong");
         }
+    }
+
+    public void updateUserData() {
+
+
     }
 }

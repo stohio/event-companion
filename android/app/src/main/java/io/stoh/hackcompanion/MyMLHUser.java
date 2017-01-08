@@ -5,11 +5,14 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -126,22 +129,31 @@ public  class MyMLHUser extends Observable {
     private Context context;
     private SharedPreferences settings;
 
+    //GSON with settings for converting Underscores to CamelCase
+    private Gson gson = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create();
+
 
     /**
      * Initialization Function for MyMLHUser.  Gives Class context in order to be able to
      * load local User Data if it is stored.  Should be executed in first use of Class after
      * adding it as an observer.
      * @param context Application Context
+     * @return True if data was loaded locally, False if data was not loaded  locally.
+     * If returns false, then updateUser needs to be run
      */
-    public void init(Context context) {
+    public boolean init(Context context) {
         this.context = context;
         settings = context.getSharedPreferences("HackCompanion", 0);
         String userJson = settings.getString("myMLHUser", null);
         if (userJson != null) {
             Log.d("MyMLHUser", "Loading Stored JSON Data");
             MyMLHUserObject userObject = new Gson().fromJson(userJson, MyMLHUserObject.class);
-            setData(userObject);
+            setUser(userObject);
+            return true;
         }
+        return false;
 
     }
 
@@ -157,13 +169,17 @@ public  class MyMLHUser extends Observable {
 
     /**
      * updates User Information using current Token.  If Token is not defined,
+     * token will attempt to be loaded from SharedPreferences, otherwise
      * IllegalArgumentException is thrown
-     * @return Volley Request to be added to RequestQueue
+     * @return Volley Request to be added to a RequestQueue
      */
     public StringRequest updateUser() {
 
-        if (myMLHToken == null)
-            throw new IllegalArgumentException("MyMLH Token is Not Defined");
+        if (myMLHToken == null) {
+            settings.getString("myMLHToken", null);
+            if (myMLHToken == null)
+                throw new IllegalArgumentException("MyMLH Token is Not Defined");
+        }
 
         Log.d("MyMLHUser", "updateUser > Token Used: " + myMLHToken);
         StringRequest request = new StringRequest(Request.Method.GET,
@@ -171,15 +187,22 @@ public  class MyMLHUser extends Observable {
                 new Response.Listener<String>() {
                     public void onResponse(String response) {
                         Log.d("MyMLHUser", " updateUser > Response Received. Updating Data");
-                        MyMLHUserObject userObject = new Gson().fromJson(response, MyMLHUserObject.class);
-                        setData(userObject);
+                        MyMLHUserObject userObject = gson.fromJson(response, MyMLHUserObject.class);
+                        setUser(userObject);
 
                     }
                 },
                 new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
                         Log.d("MyMLHUser", " updateUser > Response Error");
+                        setChanged();
+                        notifyObservers(false);
                         error.printStackTrace();
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if (networkResponse != null && networkResponse.statusCode == 401) {
+                            //Token was not authorized
+                            throw new IllegalArgumentException("Token is not valid");
+                        }
                     }
                 }) {
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -199,13 +222,13 @@ public  class MyMLHUser extends Observable {
      * Object's data and is saved locally if possible
      * @param object the new Data to set
      */
-    private void setData(MyMLHUserObject object) {
+    private void setUser(MyMLHUserObject object) {
         Log.d("MyMLHUser", "setData");
         userObject = object;
 
         if(context != null && settings != null) {
             Log.d("MyMLHUser", "Saving User Data Locally");
-            String userJson = new Gson().toJson(object);
+            String userJson = gson.toJson(object);
             settings.edit().putString("myMLHUser", userJson).apply();
         }
         else {
@@ -213,7 +236,7 @@ public  class MyMLHUser extends Observable {
         }
 
         setChanged();
-        notifyObservers();
+        notifyObservers(true);
     }
 
     /**
@@ -221,7 +244,7 @@ public  class MyMLHUser extends Observable {
      * information about the user
      * @return MyMLH User Data Object
      */
-    public MyMLHUserObject getData() {
+    public MyMLHUserObject getUser() {
         return userObject;
     }
 
