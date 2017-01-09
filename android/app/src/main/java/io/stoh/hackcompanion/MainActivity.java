@@ -5,7 +5,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.view.menu.MenuBuilder;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +17,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -24,6 +30,11 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Observer {
     private String myMLHToken;
     private MyMLHUser myMLHUser = MyMLHUser.getInstance();
+    private boolean isHackathonSelectorOpen = false;
+
+    private NavigationView navigationView;
+    private TextView hackathonSelector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +69,10 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
 
 
         if (getIntent().getBooleanExtra("myMLHUserDataLoadedFromLocal", false)) {
@@ -88,6 +101,37 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        TextView userName = (TextView) findViewById(R.id.nav_header_name);
+        String fullName = myMLHUser.getUser().getData().getFirstName() + " "
+                + myMLHUser.getUser().getData().getLastName();
+        userName.setText(fullName);
+
+        TextView schoolName = (TextView) findViewById(R.id.nav_header_school);
+        String school = myMLHUser.getUser().getData().getSchool().getName();
+        schoolName.setText(school);
+
+        hackathonSelector = (TextView) findViewById(R.id.nav_header_hackathon);
+        hackathonSelector.setText("HAkron");
+        hackathonSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isHackathonSelectorOpen) {
+                    closeHackathonSelector();
+                }
+                else {
+                    Menu menu = navigationView.getMenu();
+                    menu.clear();
+                    menu.add("HAkron");
+                    menu.add("MHacks");
+                    menu.add("Uncommon Hacks");
+                    isHackathonSelectorOpen = true;
+
+                }
+
+            }
+        });
+
         return true;
     }
 
@@ -113,11 +157,24 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        if (isHackathonSelectorOpen) {
+            int id = -1;
+            CharSequence title = item.getTitle();
+            Menu menu = navigationView.getMenu();
+            for(int i = 0; i < menu.size(); i++) {
+                if (menu.getItem(i).getTitle() == title)
+                    id = i;
+            }
+            if (id != -1)
+            closeHackathonSelector(id);
+            return false;
+        }
+        else {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
     }
 
     public void removeToken(View view) {
@@ -140,6 +197,16 @@ public class MainActivity extends AppCompatActivity
 
     public void updateUserData() {
 
+    }
 
+    private void closeHackathonSelector() {
+        isHackathonSelectorOpen = false;
+        navigationView.getMenu().clear();
+        navigationView.inflateMenu(R.menu.activity_main_drawer);
+    }
+
+    private void closeHackathonSelector(int id) {
+        hackathonSelector.setText(navigationView.getMenu().getItem(id).getTitle());
+        closeHackathonSelector();
     }
 }
