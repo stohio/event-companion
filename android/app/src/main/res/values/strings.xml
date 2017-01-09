@@ -78,7 +78,7 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_welcome_activitiy">WelcomeActivitiy</string>
+    <string name="title_activity_welcome_activitiy">Welcome Activity</string>
 
     <!-- My MLH Info -->
     <string name="my_mlh_app_id">664be6f8c0d9f8098c83f56454c3fa5abfe507514d8304b044163ff8b3cfb783</string>

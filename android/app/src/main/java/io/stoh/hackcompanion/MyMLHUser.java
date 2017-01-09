@@ -36,7 +36,6 @@ public  class MyMLHUser extends Observable {
 
 
     //Object Model for JSON -> GSON Object.  Models GET user response Object
-    //TODO fix lastname, firstname, etc to match JSON underscore versions
     public static class MyMLHUserObject {
         private String status;
         private Data data;
