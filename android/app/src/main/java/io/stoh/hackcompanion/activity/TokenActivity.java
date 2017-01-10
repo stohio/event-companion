@@ -1,32 +1,17 @@
-package io.stoh.hackcompanion;
+package io.stoh.hackcompanion.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import io.stoh.hackcompanion.R;
 
 public class TokenActivity extends AppCompatActivity {
+    public static final String DATA_MYMLH_TOKEN = "io.stoh.hackcompanion.data.key.MYMLH_TOKEN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,12 +26,11 @@ public class TokenActivity extends AppCompatActivity {
         Log.d("Token", myMLHToken);
 
         SharedPreferences settings = getSharedPreferences("HackCompanion", 0);
-        settings.edit().putString("myMLHToken", myMLHToken).apply();
+        settings.edit().putString(DATA_MYMLH_TOKEN, myMLHToken).apply();
 
         Toast.makeText(getApplicationContext(), "My MLH Authenticated!", Toast.LENGTH_LONG).show();
 
         Intent intent = new Intent(this, LoaderActivity.class);
-        intent.putExtra("myMLHToken", myMLHToken);
         startActivity(intent);
 
 

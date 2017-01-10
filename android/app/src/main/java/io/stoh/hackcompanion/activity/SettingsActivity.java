@@ -1,4 +1,4 @@
-package io.stoh.hackcompanion;
+package io.stoh.hackcompanion.activity;
 
 
 import android.annotation.TargetApi;
@@ -21,6 +21,8 @@ import android.text.TextUtils;
 import android.view.MenuItem;
 
 import java.util.List;
+
+import io.stoh.hackcompanion.R;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On

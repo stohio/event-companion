@@ -1,4 +1,4 @@
-package io.stoh.hackcompanion.io.stoh.hackcompanion.navigation;
+package io.stoh.hackcompanion.activity.navigation;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +14,7 @@ import io.stoh.hackcompanion.R;
 
 public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.content_main,container,false);
+        View v = inflater.inflate(R.layout.content_main, container, false);
         return v;
     }
 }

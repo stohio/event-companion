@@ -1,4 +1,4 @@
-package io.stoh.hackcompanion;
+package io.stoh.hackcompanion.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

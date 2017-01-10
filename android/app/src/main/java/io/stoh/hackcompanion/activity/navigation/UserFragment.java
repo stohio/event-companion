@@ -1,4 +1,4 @@
-package io.stoh.hackcompanion.io.stoh.hackcompanion.navigation;
+package io.stoh.hackcompanion.activity.navigation;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.stoh.hackcompanion.io.stoh.hackcompanion.data.MyMLHUser;
+import io.stoh.hackcompanion.data.MyMLHUser;
 import io.stoh.hackcompanion.R;
 
 /**

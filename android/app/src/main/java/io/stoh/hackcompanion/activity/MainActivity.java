@@ -1,4 +1,4 @@
-package io.stoh.hackcompanion;
+package io.stoh.hackcompanion.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,9 +20,10 @@ import android.widget.TextView;
 import java.util.Observable;
 import java.util.Observer;
 
-import io.stoh.hackcompanion.io.stoh.hackcompanion.data.MyMLHUser;
-import io.stoh.hackcompanion.io.stoh.hackcompanion.navigation.HomeFragment;
-import io.stoh.hackcompanion.io.stoh.hackcompanion.navigation.UserFragment;
+import io.stoh.hackcompanion.R;
+import io.stoh.hackcompanion.data.MyMLHUser;
+import io.stoh.hackcompanion.activity.navigation.HomeFragment;
+import io.stoh.hackcompanion.activity.navigation.UserFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -34,13 +35,15 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
     private View navHeaderView;
     private TextView hackathonSelector;
+    private String appMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("MainActivity", "onCreate");
 
         //Activity will not load unless there is a token
-        myMLHToken = getIntent().getStringExtra("myMLHToken");
+        myMLHToken = getIntent().getStringExtra(LoaderActivity.DATA_MYMLH_TOKEN);
 
         if (myMLHToken == null) {
             finishAffinity();

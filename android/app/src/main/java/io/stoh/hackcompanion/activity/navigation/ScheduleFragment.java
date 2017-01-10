@@ -1,4 +1,4 @@
-package io.stoh.hackcompanion.io.stoh.hackcompanion.navigation;
+package io.stoh.hackcompanion.activity.navigation;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,10 +9,11 @@ import android.view.ViewGroup;
 import io.stoh.hackcompanion.R;
 
 /**
- * Created by csinko on 1/9/17.
+ * Created by csinko on 1/10/17.
  */
 
 public class ScheduleFragment extends Fragment {
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.content_schedule,container,false);
         return v;

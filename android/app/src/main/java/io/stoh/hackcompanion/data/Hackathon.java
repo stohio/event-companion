@@ -1,4 +1,4 @@
-package io.stoh.hackcompanion.io.stoh.hackcompanion.data;
+package io.stoh.hackcompanion.data;
 
 /**
  * Created by csinko on 1/9/17.
@@ -10,14 +10,20 @@ public class Hackathon {
     private String startDate;
     private String endDate;
     private String location;
+    private String type;
 
-    public Hackathon(int id, String name, String startDate, String endDate, String location) {
+    public Hackathon(int id, String type, String name, String startDate, String endDate, String location) {
         this.id = id;
+        this.type = type;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.location = location;
 
+    }
+
+    public String getType() {
+        return type;
     }
 
     public int getId() {
