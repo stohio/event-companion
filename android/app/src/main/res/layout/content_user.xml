@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="First Name"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_first_name"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="Last Name"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_last_name"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="Email"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_email"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="Date of Birth"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_date_of_birth"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="Phone Number"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_phone_number"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="Gender"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_gender"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="Shirt Size"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_shirt_size"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="School"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_school"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="Level of Study"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_level_study"
+                android:text="Name"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                style="@style/userTableTextView"
+                android:text="Major"
+                />
+            <TextView
+                style="@style/userTableTextView"
+                android:id="@+id/user_major"
+                android:text="Name"/>
+        </TableRow>
+
+    </TableLayout>
+    </ScrollView>
+
+</LinearLayout>

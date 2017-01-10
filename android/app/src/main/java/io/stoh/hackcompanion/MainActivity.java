@@ -3,11 +3,8 @@ package io.stoh.hackcompanion;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.view.menu.MenuBuilder;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,13 +14,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import io.stoh.hackcompanion.io.stoh.hackcompanion.data.MyMLHUser;
+import io.stoh.hackcompanion.io.stoh.hackcompanion.navigation.HomeFragment;
+import io.stoh.hackcompanion.io.stoh.hackcompanion.navigation.UserFragment;
 
 
 public class MainActivity extends AppCompatActivity
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity
     private boolean isHackathonSelectorOpen = false;
 
     private NavigationView navigationView;
+    private View navHeaderView;
     private TextView hackathonSelector;
 
     @Override
@@ -50,19 +50,14 @@ public class MainActivity extends AppCompatActivity
         //////////////////////////////////////////////////////////////////////////////////////////
         //Load Views and etc.
 
+        //Base Content
         setContentView(R.layout.activity_main);
+
+        //Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
+        //Drawer
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -72,9 +67,57 @@ public class MainActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        navHeaderView = navigationView.getHeaderView(0);
+
+        TextView userName = (TextView) navHeaderView.findViewById(R.id.nav_header_name);
+        String fullName = myMLHUser.getUser().getData().getFirstName() + " "
+                + myMLHUser.getUser().getData().getLastName();
+        userName.setText(fullName);
+
+        TextView schoolName = (TextView) navHeaderView.findViewById(R.id.nav_header_school);
+        String school = myMLHUser.getUser().getData().getSchool().getName();
+        schoolName.setText(school);
+
+        hackathonSelector = (TextView) navHeaderView.findViewById(R.id.nav_header_hackathon);
+        hackathonSelector.setText("HAkron");
+        hackathonSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isHackathonSelectorOpen) {
+                    closeHackathonSelector();
+                }
+                else {
+                    Menu menu = navigationView.getMenu();
+                    menu.clear();
+                    menu.add("HAkron");
+                    menu.add("MHacks");
+                    menu.add("Uncommon Hacks");
+                    isHackathonSelectorOpen = true;
+                }
+
+            }
+        });
+
+        LinearLayout navHeaderUser = (LinearLayout) navHeaderView.findViewById(R.id.nav_header_user);
+        navHeaderUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Set View to UserView
+                UserFragment userFragment = new UserFragment();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.frame,userFragment, "USER_FRAGMENT");
+                fragmentTransaction.commit();
+
+            //Close Drawer
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            }
+        });
 
 
 
+
+        //Extra Notifications on Load
         if (getIntent().getBooleanExtra("myMLHUserDataLoadedFromLocal", false)) {
             Snackbar.make(drawer, "App Offline", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -99,39 +142,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        TextView userName = (TextView) findViewById(R.id.nav_header_name);
-        String fullName = myMLHUser.getUser().getData().getFirstName() + " "
-                + myMLHUser.getUser().getData().getLastName();
-        userName.setText(fullName);
-
-        TextView schoolName = (TextView) findViewById(R.id.nav_header_school);
-        String school = myMLHUser.getUser().getData().getSchool().getName();
-        schoolName.setText(school);
-
-        hackathonSelector = (TextView) findViewById(R.id.nav_header_hackathon);
-        hackathonSelector.setText("HAkron");
-        hackathonSelector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isHackathonSelectorOpen) {
-                    closeHackathonSelector();
-                }
-                else {
-                    Menu menu = navigationView.getMenu();
-                    menu.clear();
-                    menu.add("HAkron");
-                    menu.add("MHacks");
-                    menu.add("Uncommon Hacks");
-                    isHackathonSelectorOpen = true;
-
-                }
-
-            }
-        });
-
         return true;
     }
 
@@ -171,6 +181,15 @@ public class MainActivity extends AppCompatActivity
             return false;
         }
         else {
+            switch(item.getItemId()) {
+                case R.id.nav_home:
+                    HomeFragment fragment = new HomeFragment();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                    fragmentTransaction.replace(R.id.frame,fragment, "HOME_FRAGMENT");
+                    fragmentTransaction.commit();
+                    break;
+            }
+
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
             return true;

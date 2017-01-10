@@ -1,4 +1,4 @@
-package io.stoh.hackcompanion;
+package io.stoh.hackcompanion.io.stoh.hackcompanion.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -13,8 +13,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
@@ -47,7 +50,7 @@ public  class MyMLHUser extends Observable {
             return data;
         }
 
-        static class Data {
+        public static class Data {
             private int id;
             private String email, createdAt, updatedAt, firstName, lastName, major,
                     shirtSize, dietaryRestrictions, specialNeeds, dateOfBirth, gender, phoneNumber,
@@ -104,7 +107,7 @@ public  class MyMLHUser extends Observable {
                 return school;
             }
         }
-        static class School {
+        public static class School {
             private int id;
             private String name;
 
@@ -120,6 +123,8 @@ public  class MyMLHUser extends Observable {
 
     //User data is stored as MyMLHUserObject, which is Static
     private MyMLHUserObject userObject;
+    private List<Hackathon> hackathons;
+    private Hackathon currentHackathon;
 
     //Token to authenticate
     private String myMLHToken;
@@ -135,6 +140,7 @@ public  class MyMLHUser extends Observable {
 
 
     /**
+     * TODO update JavaDoc to cover Loading Hackathon Data
      * Initialization Function for MyMLHUser.  Gives Class context in order to be able to
      * load local User Data if it is stored.  Should be executed in first use of Class after
      * adding it as an observer.
@@ -143,17 +149,31 @@ public  class MyMLHUser extends Observable {
      * If returns false, then updateUser needs to be run
      */
     public boolean init(Context context) {
+        boolean successful;
         this.context = context;
         settings = context.getSharedPreferences("HackCompanion", 0);
         String userJson = settings.getString("myMLHUser", null);
         if (userJson != null) {
-            Log.d("MyMLHUser", "Loading Stored JSON Data");
+            Log.d("MyMLHUser", "Loading Stored JSON MyMLH User Data");
             MyMLHUserObject userObject = new Gson().fromJson(userJson, MyMLHUserObject.class);
             setUser(userObject);
-            return true;
+            successful = true;
         }
-        return false;
+        else
+            successful = false;
 
+        String hackathonJson = settings.getString("hackathons", null);
+        if (hackathonJson != null) {
+            Log.d("MyMLHUser", "Loading Stored JSON Hackathon Data");
+            Type listType = new TypeToken<List<Hackathon>>(){}.getType();
+            hackathons = gson.fromJson(hackathonJson, listType);
+
+        }
+
+
+
+
+        return successful;
     }
 
     /**

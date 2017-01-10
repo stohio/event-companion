@@ -36,6 +36,7 @@ public class TokenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         String url = getIntent().getDataString();
+        Log.d("Address", url);
         final String myMLHToken = url.substring(url.indexOf("token/") + 6);
         Log.d("Token", myMLHToken);
 

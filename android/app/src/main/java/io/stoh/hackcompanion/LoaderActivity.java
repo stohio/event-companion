@@ -17,6 +17,8 @@ import com.android.volley.toolbox.Volley;
 import java.util.Observable;
 import java.util.Observer;
 
+import io.stoh.hackcompanion.io.stoh.hackcompanion.data.MyMLHUser;
+
 /**
  * Created by csinko on 1/7/17.
  */
@@ -58,12 +60,12 @@ public class LoaderActivity extends AppCompatActivity implements Observer {
                         public void onClick(DialogInterface dialog, int id) {
                             //Quit Application
                             finishAffinity();
-
                         }
                     })
                     .setOnKeyListener(new Dialog.OnKeyListener() {
                         public boolean onKey(DialogInterface arg0, int keyCode, KeyEvent event) {
                             if (keyCode == KeyEvent.KEYCODE_BACK) {
+                                //Quit Application
                                 finishAffinity();
                             }
                             return false;
@@ -72,7 +74,9 @@ public class LoaderActivity extends AppCompatActivity implements Observer {
                     .show();
 
         }
-        //Otherwise, load user data and start the application
+
+
+        //load user data and start the application
         else {
             //get MyMLHUser Instance
             MyMLHUser myMLHUser = MyMLHUser.getInstance();
