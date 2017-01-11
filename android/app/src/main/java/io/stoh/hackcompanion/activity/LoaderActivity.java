@@ -10,14 +10,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
 import java.util.Observable;
 import java.util.Observer;
 
 import io.stoh.hackcompanion.R;
+import io.stoh.hackcompanion.data.Constants;
 import io.stoh.hackcompanion.data.MyMLHUser;
 
 /**
@@ -26,9 +23,6 @@ import io.stoh.hackcompanion.data.MyMLHUser;
 
 public class LoaderActivity extends AppCompatActivity implements Observer {
     private String myMLHToken;
-    private boolean myMLHUserDataLoaded = false;
-    private boolean myMLHNetworkDataLoaded = false;
-    public static final String DATA_MYMLH_TOKEN = "io.stoh.hackcompanion.data.key.MYMLH_TOKEN";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +31,7 @@ public class LoaderActivity extends AppCompatActivity implements Observer {
 
         //Try to get MyMLH Token from Shared Preferences
         SharedPreferences settings = getSharedPreferences("HackCompanion", 0);
-        myMLHToken = settings.getString(DATA_MYMLH_TOKEN, null);
+        myMLHToken = settings.getString(Constants.Keys.MYMLH_TOKEN, null);
 
         //If there isn't a token
         if (myMLHToken == null) {
@@ -99,8 +93,8 @@ public class LoaderActivity extends AppCompatActivity implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         Bundle update = (Bundle) arg;
-        if (update.containsKey(MyMLHUser.UPDATE_USER)) {
-            if(update.getBoolean(MyMLHUser.UPDATE_USER)) {
+        if (update.containsKey(Constants.Updates.USER)) {
+            if(update.getBoolean(Constants.Updates.USER)) {
                 startApplication();
             }
             else {
@@ -132,7 +126,7 @@ public class LoaderActivity extends AppCompatActivity implements Observer {
     public void startApplication() {
             //Start the Application
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(DATA_MYMLH_TOKEN, myMLHToken);
+            intent.putExtra(Constants.Keys.MYMLH_TOKEN, myMLHToken);
             startActivity(intent);
             finishAffinity();
     }

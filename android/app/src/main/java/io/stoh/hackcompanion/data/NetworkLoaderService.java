@@ -27,14 +27,6 @@ import java.util.Map;
  */
 public class NetworkLoaderService extends IntentService {
 
-    //Actions
-    public static final String ACTION_LOAD_USER_DATA = "io.stoh.hackcompanion.data.action.LOAD_USER_DATA";
-
-    //Data
-    public static final String DATA_MYMLH_TOKEN = "io.stoh.hackcompanion.data.key.DATA_MYMLH_TOKEN";
-    public static final String DATA_MYMLH_USER_DATA = "io.stoh.hackcompanion.data.key.MY_MLH_USER_DATA";
-    public static final String DATA_RECEIVER = "io.stoh.hackcompanion.data.key.DATA_RECEIVER";
-
     public NetworkLoaderService() {
         super("NetworkLoaderService");
     }
@@ -46,18 +38,18 @@ public class NetworkLoaderService extends IntentService {
      */
     public static void startActionLoadUserData(Context context, ResultReceiver receiver, String myMLHToken) {
         Intent intent = new Intent(context, NetworkLoaderService.class);
-        intent.setAction(ACTION_LOAD_USER_DATA);
-        intent.putExtra(DATA_MYMLH_TOKEN, myMLHToken);
-        intent.putExtra(DATA_RECEIVER, receiver);
+        intent.setAction(Constants.Actions.LOAD_USER_DATA);
+        intent.putExtra(Constants.Keys.MYMLH_TOKEN, myMLHToken);
+        intent.putExtra(Constants.Keys.RECEIVER, receiver);
         context.startService(intent);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
             final String action = intent.getAction();
-            if (ACTION_LOAD_USER_DATA.equals(action)) {
-                String myMLHToken = intent.getStringExtra(DATA_MYMLH_TOKEN);
-                ResultReceiver receiver = intent.getParcelableExtra(DATA_RECEIVER);
+            if (action.equals(Constants.Actions.LOAD_USER_DATA)) {
+                String myMLHToken = intent.getStringExtra(Constants.Keys.MYMLH_TOKEN);
+                ResultReceiver receiver = intent.getParcelableExtra(Constants.Keys.RECEIVER);
                 handleActionLoadUserData(myMLHToken, receiver);
         }
     }
@@ -65,14 +57,14 @@ public class NetworkLoaderService extends IntentService {
 
     private void handleActionLoadUserData(final String myMLHToken, final ResultReceiver receiver) {
         final Bundle result = new Bundle();
-        result.putString("Action", ACTION_LOAD_USER_DATA);
+        result.putString("Action", Constants.Actions.LOAD_USER_DATA);
         Volley.newRequestQueue(this).add(
                 new StringRequest(Request.Method.GET,
                     "https://my.mlh.io/api/v2/user.json",
                     new Response.Listener<String>() {
                         public void onResponse(String response) {
                             Log.d("NetworkLoaderService", "LoadUserData > Success");
-                            result.putString(DATA_MYMLH_USER_DATA, response);
+                            result.putString(Constants.Keys.MYMLH_USER_DATA, response);
                             receiver.send(0, result);
                         }
                     },

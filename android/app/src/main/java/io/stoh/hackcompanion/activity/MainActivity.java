@@ -21,6 +21,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import io.stoh.hackcompanion.R;
+import io.stoh.hackcompanion.data.Constants;
+import io.stoh.hackcompanion.data.Hackathon;
 import io.stoh.hackcompanion.data.MyMLHUser;
 import io.stoh.hackcompanion.activity.navigation.HomeFragment;
 import io.stoh.hackcompanion.activity.navigation.UserFragment;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity
     private NavigationView navigationView;
     private View navHeaderView;
     private TextView hackathonSelector;
-    private String appMode;
+    private Constants.Modes appMode = Constants.Modes.EMPTY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +45,15 @@ public class MainActivity extends AppCompatActivity
         Log.d("MainActivity", "onCreate");
 
         //Activity will not load unless there is a token
-        myMLHToken = getIntent().getStringExtra(LoaderActivity.DATA_MYMLH_TOKEN);
+        myMLHToken = getIntent().getStringExtra(Constants.Keys.MYMLH_TOKEN);
 
         if (myMLHToken == null) {
             finishAffinity();
         }
+
+
+
+
 
 
         //////////////////////////////////////////////////////////////////////////////////////////
@@ -67,6 +73,8 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
+        //Navigtation View
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -81,44 +89,12 @@ public class MainActivity extends AppCompatActivity
         String school = myMLHUser.getUser().getData().getSchool().getName();
         schoolName.setText(school);
 
-        hackathonSelector = (TextView) navHeaderView.findViewById(R.id.nav_header_hackathon);
-        hackathonSelector.setText("HAkron");
-        hackathonSelector.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isHackathonSelectorOpen) {
-                    closeHackathonSelector();
-                }
-                else {
-                    Menu menu = navigationView.getMenu();
-                    menu.clear();
-                    menu.add("HAkron");
-                    menu.add("MHacks");
-                    menu.add("Uncommon Hacks");
-                    isHackathonSelectorOpen = true;
-                }
-
-            }
-        });
 
         LinearLayout navHeaderUser = (LinearLayout) navHeaderView.findViewById(R.id.nav_header_user);
-        navHeaderUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Set View to UserView
-                UserFragment userFragment = new UserFragment();
-                android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame,userFragment, "USER_FRAGMENT");
-                fragmentTransaction.commit();
+        navHeaderUser.setOnClickListener(navHeaderUserListener);
 
-            //Close Drawer
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-            }
-        });
-
-
-
+        hackathonSelector = (TextView) navHeaderView.findViewById(R.id.nav_header_hackathon);
+        hackathonSelector.setOnClickListener(hackathonSelectorListener);
 
         //Extra Notifications on Load
         if (getIntent().getBooleanExtra("myMLHUserDataLoadedFromLocal", false)) {
@@ -127,13 +103,44 @@ public class MainActivity extends AppCompatActivity
         }
 
         //////////////////////////////////////////////////////////////////////////////////////////
+        //TODO maybe move this to beginning of onCreate?  But potential issues of Null Pointers
         myMLHUser.addObserver(this);
+        myMLHUser.updateUser();
+        myMLHUser.updateHackathons();
 
 
     }
 
+    private View.OnClickListener navHeaderUserListener = new View.OnClickListener() {
 
-    @Override
+        @Override
+        public void onClick(View v) {
+            //Set View to UserView
+            UserFragment userFragment = new UserFragment();
+            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.frame, userFragment, "USER_FRAGMENT");
+            fragmentTransaction.commit();
+
+            //Close Drawer
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+        }
+    };
+
+    private View.OnClickListener hackathonSelectorListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.d("MainActivity", "hackathonSelectorListener Click");
+            if (isHackathonSelectorOpen) {
+                Log.d("MainActivity", "HackathonSelector is Open");
+                closeHackathonSelector();
+            }
+            else {
+                Log.d("MainActivity", "HackathonSelector is Closed");
+                setNavigationMenu(false);
+            }
+        }
+    };
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -169,9 +176,11 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        Log.d("MainActivity", "NavItemSelected");
         // Handle navigation view item clicks here.
 
         if (isHackathonSelectorOpen) {
+            Log.d("MainActivity", "Hackathon Selector is Open");
             int id = -1;
             CharSequence title = item.getTitle();
             Menu menu = navigationView.getMenu();
@@ -184,13 +193,17 @@ public class MainActivity extends AppCompatActivity
             return false;
         }
         else {
-            switch(item.getItemId()) {
-                case R.id.nav_home:
-                    HomeFragment fragment = new HomeFragment();
-                    android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction.replace(R.id.frame,fragment, "HOME_FRAGMENT");
-                    fragmentTransaction.commit();
-                    break;
+            switch(appMode) {
+                case USER:
+                    switch(item.getItemId()) {
+                        case R.id.nav_home:
+                            HomeFragment fragment = new HomeFragment();
+                            android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.replace(R.id.frame,fragment, "HOME_FRAGMENT");
+                            fragmentTransaction.commit();
+                            break;
+                    }
+                break;
             }
 
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -207,28 +220,88 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void update(Observable o, Object arg) {
-        Log.d("MainActivity", "Observer > Notified");
-        if (o.getClass().equals(MyMLHUser.class)) {
-            updateUserData();
+        Log.d("MainActivity", "Update");
+        Bundle update = (Bundle) arg;
 
-        }
-        else {
-            Log.d("MainActivity", "Observer > Something Went Wrong");
+        if (update.containsKey(Constants.Updates.HACKATHON)) {
+            Log.d("MainActivity", "Hackathon Update");
+            if (update.getBoolean(Constants.Updates.HACKATHON)) {
+                Log.d("MainActivity", "Update True");
+                setMode(myMLHUser.getMode());
+            }
         }
     }
 
-    public void updateUserData() {
-
-    }
 
     private void closeHackathonSelector() {
+        Log.d("MainActivity", "closeHackathonSelector");
         isHackathonSelectorOpen = false;
-        navigationView.getMenu().clear();
-        navigationView.inflateMenu(R.menu.activity_main_drawer);
+        setNavigationMenu(true);
     }
 
     private void closeHackathonSelector(int id) {
+        Log.d("MainActivity", "Changing Selected Hackathon");
         hackathonSelector.setText(navigationView.getMenu().getItem(id).getTitle());
         closeHackathonSelector();
+    }
+
+
+    private void setMode(Constants.Modes mode) {
+        Log.d("MainActivity", "Setting New Mode");
+        Log.d("MainActivity", "Current Mode: " + appMode.toString());
+        Log.d("MainActivity", "New Mode: " + mode.toString());
+        if (mode != appMode) {
+            Log.d("MainActivity", "New Mode is Different than Current Mode");
+            appMode = mode;
+            switch (appMode) {
+                case USER:
+                    Log.d("MainActivity", "Setting up USER Mode");
+                    setupHackathonSelector(true);
+                    break;
+            }
+        }
+
+        setNavigationMenu(true);
+    }
+
+    private void setNavigationMenu(Boolean isNav) {
+        Log.d("MainActivity", "Setting Navigation Menu");
+        navigationView.getMenu().clear();
+        //Navigation Menus
+        if (isNav) {
+            Log.d("MainActivity", "Setting Navigation Menu to Normal Navigation");
+            Log.d("MainActivity", "App Mode: " + appMode.toString());
+            switch(appMode) {
+                case USER:
+                    Log.d("MainActivity", "Setting Navigation Menu to User");
+                    navigationView.inflateMenu(R.menu.activity_main_drawer);
+                    break;
+            }
+
+        }
+        //Hackathon Select Menu
+        else {
+            isHackathonSelectorOpen = true;
+            Log.d("MainActivity", "Setting Navigation Menu to Hackathon Menu");
+            for(Hackathon hackathon: myMLHUser.getHackathons()) {
+                Log.d("MainActivity", "Adding Hackathon " + hackathon.getName());
+                navigationView.getMenu().add(hackathon.getName());
+            }
+
+        }
+    }
+
+    private void setupHackathonSelector(Boolean notEmpty) {
+        Log.d("MainActivity", "setupHackathonSelector");
+        Log.d("MainActivity", "not Empty?" + notEmpty.toString());
+
+        if(notEmpty) {
+            Log.d("MainActivity", "Setting Selector Text to " + myMLHUser.getCurrentHackathon().getName());
+            hackathonSelector.setText(myMLHUser.getCurrentHackathon().getName());
+        }
+        else {
+            Log.d("MainActivity", "Setting Selector Text to No Hackathons");
+            hackathonSelector.setText("No Hackathons");
+        }
     }
 }

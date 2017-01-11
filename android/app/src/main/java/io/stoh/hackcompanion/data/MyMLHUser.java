@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Observable;
 
+
 /**
  * Created by csinko on 1/7/17.
  */
@@ -134,10 +135,6 @@ public class MyMLHUser extends Observable implements Receiver {
     private Gson gson;
     NetworkResultReceiver networkResultReceiver;
 
-    public static final String UPDATE_USER = "io.stoh.hackcompanion.data.update.UPDATE_USER";
-    public static final String UPDATE_HACKATHON = "io.stoh.hackcompanion.data.update.UPDATE_HACKATHON";
-    public static final String DATA_MYMLH_USER = "io.stoh.hackcompanion.data.key.MYMLH_USER";
-    public static final String DATA_HACKATHONS = "io.stoh.hackcompanion.data.key.HACKATHONS";
     /**
      * TODO update JavaDoc to cover Loading Hackathon Data
      * Initialization Function for MyMLHUser.  Gives Class context in order to be able to
@@ -163,7 +160,7 @@ public class MyMLHUser extends Observable implements Receiver {
         settings = context.getSharedPreferences("HackCompanion", 0);
 
         //Try to Load Local Hackathon Data
-        String hackathonJson = settings.getString(DATA_HACKATHONS, null);
+        String hackathonJson = settings.getString(Constants.Keys.DATA_HACKATHONS, null);
         if (hackathonJson != null) {
             Type listType = new TypeToken<List<Hackathon>>(){}.getType();
             hackathons = gson.fromJson(hackathonJson, listType);
@@ -172,7 +169,7 @@ public class MyMLHUser extends Observable implements Receiver {
         }
 
         //Try to Load Local MyMLH User Data
-        String myMLHUserJson = settings.getString(DATA_MYMLH_USER, null);
+        String myMLHUserJson = settings.getString(Constants.Keys.DATA_MYMLH_USER, null);
         if (myMLHUserJson != null) {
             //Data Loaded Successfully
             setUser(myMLHUserJson);
@@ -186,15 +183,15 @@ public class MyMLHUser extends Observable implements Receiver {
     public void onReceiveResult(int resultCode, Bundle resultData) {
         Log.d("MyMLHUser", "ReceiveResult");
         switch (resultData.getString("Action", "")) {
-            case NetworkLoaderService.ACTION_LOAD_USER_DATA:
+            case Constants.Actions.LOAD_USER_DATA:
                 if (resultCode == 0) {
                     //Success
-                    setUser(resultData.getString(NetworkLoaderService.DATA_MYMLH_USER_DATA));
+                    setUser(resultData.getString(Constants.Keys.MYMLH_USER_DATA));
                 }
                 else {
                     //Fail
                     Bundle update = new Bundle();
-                    update.putBoolean(UPDATE_USER, false);
+                    update.putBoolean(Constants.Updates.USER, false);
                     setChanged();
                     notifyObservers(update);
                 }
@@ -218,9 +215,9 @@ public class MyMLHUser extends Observable implements Receiver {
     public void updateHackathons() {
 
         //Static Content to "load" for now.  Later will send Request to NetworkLoaderService
-        Hackathon hAkron = new Hackathon(1, "User", "HAkron", "2016-04-01", "2016-04-02", "Akron, OH");
-        Hackathon mHacks = new Hackathon(2, "User", "MHacks", "2016-05-05", "2016-05-06", "Detroit, MI");
-        Hackathon uncommonHacks = new Hackathon(3, "User", "Uncommon Hacks", "2016-01-14", "2016-01-15", "Chicago, IL");
+        Hackathon hAkron = new Hackathon(1, Constants.Modes.USER, "HAkron", "2016-04-01", "2016-04-02", "Akron, OH");
+        Hackathon mHacks = new Hackathon(2, Constants.Modes.USER, "MHacks", "2016-05-05", "2016-05-06", "Detroit, MI");
+        Hackathon uncommonHacks = new Hackathon(3, Constants.Modes.USER, "Uncommon Hacks", "2016-01-14", "2016-01-15", "Chicago, IL");
         List<Hackathon> hackathons = Arrays.asList(hAkron, mHacks, uncommonHacks);
         String hackathonJson = gson.toJson(hackathons);
 
@@ -234,7 +231,7 @@ public class MyMLHUser extends Observable implements Receiver {
             throw new IllegalArgumentException("Hackathons JSON is empty");
 
         //Save String
-        settings.edit().putString(DATA_HACKATHONS, hackathonJson).apply();
+        settings.edit().putString(Constants.Keys.DATA_HACKATHONS, hackathonJson).apply();
         //Set hackathons
         Type listType = new TypeToken<List<Hackathon>>(){}.getType();
         hackathons = gson.fromJson(hackathonJson, listType);
@@ -245,7 +242,7 @@ public class MyMLHUser extends Observable implements Receiver {
 
         //Notify Observers
         Bundle update = new Bundle();
-        update.putBoolean(UPDATE_HACKATHON, true);
+        update.putBoolean(Constants.Updates.HACKATHON, true);
         setChanged();
         notifyObservers(update);
     }
@@ -257,14 +254,14 @@ public class MyMLHUser extends Observable implements Receiver {
             throw new IllegalArgumentException("User JSON is empty");
 
         //Save String
-        settings.edit().putString(DATA_MYMLH_USER, myMLHUserJson).apply();
+        settings.edit().putString(Constants.Keys.DATA_MYMLH_USER, myMLHUserJson).apply();
 
         //Set Instance Object to String Converted to Object
         userObject = gson.fromJson(myMLHUserJson, MyMLHUserObject.class);
 
         //Notify Observers of update
         Bundle update = new Bundle();
-        update.putBoolean(UPDATE_USER, true);
+        update.putBoolean(Constants.Updates.USER, true);
         setChanged();
         notifyObservers(update);
     }
@@ -278,17 +275,10 @@ public class MyMLHUser extends Observable implements Receiver {
         return userObject;
     }
 
-    public String getMode() {
-        if (currentHackathon != null) {
-            switch (currentHackathon.getType()) {
-                case "User":
-                    return "User";
-                case "Mentor":
-                case "Organizer":
-                    return "Mentor";
-            }
-        }
-        return "Empty";
+    public Constants.Modes getMode() {
+        if (currentHackathon != null)
+            return currentHackathon.getType();
+        return Constants.Modes.EMPTY;
     }
 
     public List<Hackathon> getHackathons() {

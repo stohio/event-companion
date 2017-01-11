@@ -10,9 +10,9 @@ public class Hackathon {
     private String startDate;
     private String endDate;
     private String location;
-    private String type;
+    private Constants.Modes type;
 
-    public Hackathon(int id, String type, String name, String startDate, String endDate, String location) {
+    public Hackathon(int id, Constants.Modes type, String name, String startDate, String endDate, String location) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -22,7 +22,7 @@ public class Hackathon {
 
     }
 
-    public String getType() {
+    public Constants.Modes getType() {
         return type;
     }
 
