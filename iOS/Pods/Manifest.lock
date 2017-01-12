@@ -1,0 +1,15 @@
+PODS:
+  - KeychainSwift (7.0.0)
+  - SideMenu (2.1.4)
+
+DEPENDENCIES:
+  - KeychainSwift
+  - SideMenu
+
+SPEC CHECKSUMS:
+  KeychainSwift: b6947435dd78cc442c64a84ae648dd0e871cf448
+  SideMenu: 74b93b251064668fc7523aae897157b767733f04
+
+PODFILE CHECKSUM: 78c1a155bfe1f619de829f24504bae47fe09d099
+
+COCOAPODS: 1.2.0.beta.1
