@@ -29,11 +29,24 @@ class MenuItem: UIViewController {
         }
         
         initNavBar()
+        
+    }
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        
+        if UIDevice.current.orientation.isLandscape {
+            navBar.removeFromSuperview()
+            initNavBar(optionalWidth: size.width)
+        } else {
+            navBar.removeFromSuperview()
+            initNavBar(optionalWidth: size.width)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -41,8 +54,12 @@ class MenuItem: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    private func initNavBar() {
-        self.navBar.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: 74)
+    private func initNavBar(optionalWidth: CGFloat = -1) {
+        var width = optionalWidth
+        if optionalWidth == -1 {
+            width = self.view.frame.width
+        }
+        self.navBar.frame = CGRect(x: 0, y: 0, width: width, height: 74)
         self.view.addSubview(navBar)
         
         let menuBtn = UIButton(type: .custom)

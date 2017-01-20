@@ -12,7 +12,7 @@
         <!--Init View Controller-->
         <scene sceneID="zzE-Z7-zYg">
             <objects>
-                <viewController storyboardIdentifier="InitViewController" title="Init View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cd2-Yl-Yba" customClass="InitViewController" customModule="Hackron" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InitViewController" title="Init View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Cd2-Yl-Yba" customClass="InitViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Gk1-fu-LZa"/>
                         <viewControllerLayoutGuide type="bottom" id="7Jb-gi-kTk"/>
@@ -31,7 +31,7 @@
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="MainViewController" title="Main View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MainViewController" customModule="Hackron" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MainViewController" title="Main View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="MainViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -59,7 +59,7 @@
         <!--Count View Controller-->
         <scene sceneID="cRQ-VE-Vu0">
             <objects>
-                <viewController storyboardIdentifier="CountViewController" title="Count View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Soz-N6-jwk" customClass="CountViewController" customModule="Hackron" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CountViewController" title="Count View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Soz-N6-jwk" customClass="CountViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UKF-cm-mQe"/>
                         <viewControllerLayoutGuide type="bottom" id="aT9-Gb-bcT"/>
@@ -86,7 +86,7 @@
         <!--Mentor View Controller-->
         <scene sceneID="8WR-4h-rni">
             <objects>
-                <viewController storyboardIdentifier="MentorViewController" title="Mentor View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5oH-1Y-bRI" customClass="MentorViewController" customModule="Hackron" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MentorViewController" title="Mentor View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="5oH-1Y-bRI" customClass="MentorViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="n07-KM-0Cj"/>
                         <viewControllerLayoutGuide type="bottom" id="HlZ-sz-Yjo"/>
@@ -113,7 +113,7 @@
         <!--Schedule View Controller-->
         <scene sceneID="WQL-GJ-ySJ">
             <objects>
-                <viewController storyboardIdentifier="ScheduleViewController" title="Schedule View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GGO-ls-Dl1" customClass="ScheduleViewController" customModule="Hackron" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ScheduleViewController" title="Schedule View Controller" useStoryboardIdentifierAsRestorationIdentifier="YES" id="GGO-ls-Dl1" customClass="ScheduleViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="N88-Jq-B0B"/>
                         <viewControllerLayoutGuide type="bottom" id="95g-Uq-OUa"/>
@@ -142,7 +142,7 @@
         <!--Menu View Controller-->
         <scene sceneID="4oy-br-ajb">
             <objects>
-                <tableViewController storyboardIdentifier="MenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="17G-Fu-3XQ" userLabel="Menu View Controller" customClass="MenuViewController" customModule="Hackron" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="17G-Fu-3XQ" userLabel="Menu View Controller" customClass="MenuViewController" customModule="Hakron" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="K1a-Fc-o5B">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -154,11 +154,11 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oTi-qf-m4S" id="ULB-61-42e">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PST-Vu-eeH">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43"/>
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -167,18 +167,18 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="BYZ-38-t0r" kind="custom" identifier="Home" customClass="ReplaceImmediate" customModule="Hackron" customModuleProvider="target" animates="NO" id="Lm3-d3-u8k"/>
+                                            <segue destination="BYZ-38-t0r" kind="show" animates="NO" id="hfs-Kv-Gv7"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="sO5-lm-EFC" style="IBUITableViewCellStyleDefault" id="XeH-ka-c0v">
                                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XeH-ka-c0v" id="4nB-oM-fcn">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Countdown" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sO5-lm-EFC">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43"/>
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -187,18 +187,18 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Soz-N6-jwk" kind="custom" customClass="ReplaceImmediate" customModule="Hackron" customModuleProvider="target" animates="NO" id="2CM-4S-pow"/>
+                                            <segue destination="Soz-N6-jwk" kind="show" animates="NO" id="ncS-dm-7ui"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="cRX-To-VgL" style="IBUITableViewCellStyleDefault" id="aRo-RX-UrK">
                                         <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aRo-RX-UrK" id="PXc-sT-xpl">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Schedule" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cRX-To-VgL">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43"/>
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -207,18 +207,18 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="GGO-ls-Dl1" kind="custom" customClass="ReplaceImmediate" customModule="Hackron" customModuleProvider="target" animates="NO" id="5fa-J0-iJm"/>
+                                            <segue destination="GGO-ls-Dl1" kind="show" animates="NO" id="qyE-q8-sNC"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="LuU-a8-LWv" style="IBUITableViewCellStyleDefault" id="SKj-Ct-FPz">
                                         <rect key="frame" x="0.0" y="132" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SKj-Ct-FPz" id="b7C-GO-Nni">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Mentor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LuU-a8-LWv">
-                                                    <rect key="frame" x="15" y="0.0" width="345" height="43"/>
+                                                    <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -227,7 +227,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="5oH-1Y-bRI" kind="custom" customClass="ReplaceImmediate" customModule="Hackron" customModuleProvider="target" animates="NO" id="Kyw-On-qMq"/>
+                                            <segue destination="5oH-1Y-bRI" kind="show" animates="NO" id="nmd-70-JyQ"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

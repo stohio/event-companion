@@ -97,22 +97,22 @@ open class UISideMenuNavigationController: UINavigationController {
         SideMenuTransition.statusBarView?.isHidden = true
         coordinator.animate(alongsideTransition: { (context) -> Void in
             SideMenuTransition.presentMenuStart(forSize: size)
-            }) { (context) -> Void in
-                SideMenuTransition.statusBarView?.isHidden = false
+        }) { (context) -> Void in
+            SideMenuTransition.statusBarView?.isHidden = false
         }
     }
     
     override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let menuViewController: UINavigationController = SideMenuTransition.presentDirection == .left ? SideMenuManager.menuLeftNavigationController : SideMenuManager.menuRightNavigationController,
             let presentingViewController = menuViewController.presentingViewController as? UINavigationController {
-                presentingViewController.prepare(for: segue, sender: sender)
+            presentingViewController.prepare(for: segue, sender: sender)
         }
     }
     
     override open func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if let menuViewController: UINavigationController = SideMenuTransition.presentDirection == .left ? SideMenuManager.menuLeftNavigationController : SideMenuManager.menuRightNavigationController,
             let presentingViewController = menuViewController.presentingViewController as? UINavigationController {
-                return presentingViewController.shouldPerformSegue(withIdentifier: identifier, sender: sender)
+            return presentingViewController.shouldPerformSegue(withIdentifier: identifier, sender: sender)
         }
         
         return super.shouldPerformSegue(withIdentifier: identifier, sender: sender)
@@ -125,7 +125,7 @@ open class UISideMenuNavigationController: UINavigationController {
             super.pushViewController(viewController, animated: animated)
             return
         }
-
+        
         let tabBarController = presentingViewController as? UITabBarController
         guard let navigationController = (tabBarController?.selectedViewController ?? presentingViewController) as? UINavigationController else {
             print("SideMenu Warning: attempt to push a View Controller from \(presentingViewController.self) where its navigationController == nil. It must be embedded in a Navigation Controller for this to work.")
@@ -140,9 +140,12 @@ open class UISideMenuNavigationController: UINavigationController {
             self.visibleViewController?.viewWillAppear(false) // Hack: force selection to get cleared on UITableViewControllers when reappearing using custom transitions
         })
         
+        let areAnimationsEnabled = UIView.areAnimationsEnabled
+        UIView.setAnimationsEnabled(true)
         UIView.animate(withDuration: SideMenuManager.menuAnimationDismissDuration, animations: { () -> Void in
             SideMenuTransition.hideMenuStart()
         })
+        UIView.setAnimationsEnabled(areAnimationsEnabled)
         
         if SideMenuManager.menuAllowPopIfPossible {
             for subViewController in navigationController.viewControllers {
@@ -152,6 +155,21 @@ open class UISideMenuNavigationController: UINavigationController {
                     return
                 }
             }
+        }
+        
+        if SideMenuManager.menuPreserveViewOnPush {
+            var viewControllers = navigationController.viewControllers
+            let filtered = viewControllers.filter {preservedViewController in type(of: preservedViewController) == type(of: viewController)}
+            if let preservedViewController = filtered.first {
+                viewControllers = viewControllers.filter() { $0 !== preservedViewController }
+                viewControllers.append(preservedViewController)
+                navigationController.setViewControllers(viewControllers, animated: animated)
+                CATransaction.commit()
+                return
+            }
+            navigationController.pushViewController(viewController, animated: animated)
+            CATransaction.commit()
+            return
         }
         
         if SideMenuManager.menuReplaceOnPush {
@@ -167,7 +185,7 @@ open class UISideMenuNavigationController: UINavigationController {
             CATransaction.commit()
             return
         }
-        
+
         navigationController.pushViewController(viewController, animated: animated)
         CATransaction.commit()
     }

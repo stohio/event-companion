@@ -14,7 +14,8 @@ class InitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        // if our token is valid, continue the flow of navigation
         if(checkToken())
         {
             setupSideMenu()
@@ -22,19 +23,42 @@ class InitViewController: UIViewController {
             homeVC.menuNumber = 0
             navigationController?.pushViewController(homeVC, animated: false)
         }
+        // else, request the token from the user via our user prompt
         else
         {
-            let url = URL(string: "https://my.mlh.io/oauth/authorize?client_id=664be6f8c0d9f8098c83f56454c3fa5abfe507514d8304b044163ff8b3cfb783&redirect_uri=http%3A%2F%2Fstoh.io%2Foauth%2Fcallback.html&response_type=token")!
-            if UIApplication.shared.canOpenURL(url) {
-                UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                //If you want handle the completion block than
-                UIApplication.shared.open(url, options: [:], completionHandler: { (success) in
-                    print("Open url : \(success)")
-                })
-            }
+            userPrompt()
         }
     }
     
+    /// Alert designed to only continue the navigation flow if the user authenticates their MLH account with our system.
+    fileprivate func userPrompt()
+    {
+        let alert = UIAlertController(title: "Authentication", message: "No token found! Would you like to authenticate via your MLH account?", preferredStyle: UIAlertControllerStyle.alert)
+        let tokenRequest = UIAlertAction(title: "Yes", style: UIAlertActionStyle.default)
+        {
+            (result : UIAlertAction) -> Void in
+            self.requestToken()
+        }
+        let noAction = UIAlertAction(title: "No", style: UIAlertActionStyle.cancel)
+        {
+            (result : UIAlertAction) -> Void in
+            self.userPrompt()
+        }
+        alert.addAction(noAction)
+        alert.addAction(tokenRequest)
+        self.present(alert, animated: false, completion: nil)
+    }
+    
+    /// Directs the user to MLH authentication webpage and handles the token in AppDelegate.swift
+    fileprivate func requestToken()
+    {
+        let url = URL(string: "https://my.mlh.io/oauth/authorize?client_id=664be6f8c0d9f8098c83f56454c3fa5abfe507514d8304b044163ff8b3cfb783&redirect_uri=https%3A%2F%2Fstoh.io%2Foauth%2Fcallback.html&response_type=token")!
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+    }
+    
+    /// Determines whether or not the token exists wihin our secure KeyChain.
     fileprivate func checkToken() -> Bool
     {
         let keychain = KeychainSwift()
@@ -42,23 +66,22 @@ class InitViewController: UIViewController {
         let token = keychain.get("token")
         if(token != nil)
         {
-            keychain.clear()
+//            keychain.clear()
             return true
         }
         return false
     }
     
+    /// Setting up our required options for our side menu.
     fileprivate func setupSideMenu() {
-        // Define the menus
+        // Define the menu
         SideMenuManager.menuLeftNavigationController = storyboard!.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? UISideMenuNavigationController
         
-        // Enable gestures. The left and/or right menus must be set up above for these to work.
-        // Note that these continue to work on the Navigation Controller independent of the View Controller it displays!
+        // Enable gestures and customize view and functionality
         SideMenuManager.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
         SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
-        SideMenuManager.menuReplaceOnPush = false
         SideMenuManager.menuFadeStatusBar = false
-
+        SideMenuManager.menuPreserveViewOnPush = true
     }
     
     override func didReceiveMemoryWarning() {
