@@ -1,5 +1,5 @@
 """
-WSGI config for event_companion_server project.
+WSGI config for eventcomp project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "event_companion_server.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "eventcomp.settings")
 
 application = get_wsgi_application()
