@@ -21,7 +21,7 @@ open class UISideMenuNavigationController: UINavigationController {
     }
     
     /// Whether the menu appears on the right or left side of the screen. Right is the default.
-    @IBInspectable open var leftSide:Bool = false {
+    @IBInspectable open var leftSide: Bool = false {
         didSet {
             if isViewLoaded && oldValue != leftSide { // suppress warnings
                 didSetSide()
@@ -52,6 +52,10 @@ open class UISideMenuNavigationController: UINavigationController {
             dismiss(animated: false, completion: { () -> Void in
                 self.view.isHidden = false
             })
+        }
+        
+        if topViewController == nil {
+            print("SideMenu Warning: the menu doesn't have a view controller to show! UISideMenuNavigationController needs a view controller to display just like a UINavigationController.")
         }
     }
     
@@ -97,35 +101,35 @@ open class UISideMenuNavigationController: UINavigationController {
         SideMenuTransition.statusBarView?.isHidden = true
         coordinator.animate(alongsideTransition: { (context) -> Void in
             SideMenuTransition.presentMenuStart(forSize: size)
-        }) { (context) -> Void in
-            SideMenuTransition.statusBarView?.isHidden = false
+            }) { (context) -> Void in
+                SideMenuTransition.statusBarView?.isHidden = false
         }
     }
     
     override open func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let menuViewController: UINavigationController = SideMenuTransition.presentDirection == .left ? SideMenuManager.menuLeftNavigationController : SideMenuManager.menuRightNavigationController,
             let presentingViewController = menuViewController.presentingViewController as? UINavigationController {
-            presentingViewController.prepare(for: segue, sender: sender)
+                presentingViewController.prepare(for: segue, sender: sender)
         }
     }
     
     override open func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if let menuViewController: UINavigationController = SideMenuTransition.presentDirection == .left ? SideMenuManager.menuLeftNavigationController : SideMenuManager.menuRightNavigationController,
             let presentingViewController = menuViewController.presentingViewController as? UINavigationController {
-            return presentingViewController.shouldPerformSegue(withIdentifier: identifier, sender: sender)
+                return presentingViewController.shouldPerformSegue(withIdentifier: identifier, sender: sender)
         }
         
         return super.shouldPerformSegue(withIdentifier: identifier, sender: sender)
     }
     
     override open func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        guard viewControllers.count > 0 && !SideMenuManager.menuAllowSubmenus else {
+        guard viewControllers.count > 0 && SideMenuManager.menuPushStyle != .subMenu else {
             // NOTE: pushViewController is called by init(rootViewController: UIViewController)
             // so we must perform the normal super method in this case.
             super.pushViewController(viewController, animated: animated)
             return
         }
-        
+
         let tabBarController = presentingViewController as? UITabBarController
         guard let navigationController = (tabBarController?.selectedViewController ?? presentingViewController) as? UINavigationController else {
             print("SideMenu Warning: attempt to push a View Controller from \(presentingViewController.self) where its navigationController == nil. It must be embedded in a Navigation Controller for this to work.")
@@ -147,45 +151,44 @@ open class UISideMenuNavigationController: UINavigationController {
         })
         UIView.setAnimationsEnabled(areAnimationsEnabled)
         
-        if SideMenuManager.menuAllowPopIfPossible {
-            for subViewController in navigationController.viewControllers {
+        if let lastViewController = navigationController.viewControllers.last, !SideMenuManager.menuAllowPushOfSameClassTwice && type(of: lastViewController) == type(of: viewController) {
+            CATransaction.commit()
+            return
+        }
+        
+        switch SideMenuManager.menuPushStyle {
+        case .subMenu, .defaultBehavior: break // .subMenu handled earlier, .defaultBehavior falls through to end
+        case .popWhenPossible:
+            for subViewController in navigationController.viewControllers.reversed() {
                 if type(of: subViewController) == type(of: viewController) {
                     navigationController.popToViewController(subViewController, animated: animated)
                     CATransaction.commit()
                     return
                 }
             }
-        }
-        
-        if SideMenuManager.menuPreserveViewOnPush {
+        case .preserve, .preserveAndHideBackButton:
             var viewControllers = navigationController.viewControllers
-            let filtered = viewControllers.filter {preservedViewController in type(of: preservedViewController) == type(of: viewController)}
-            if let preservedViewController = filtered.first {
-                viewControllers = viewControllers.filter() { $0 !== preservedViewController }
+            let filtered = viewControllers.filter { preservedViewController in type(of: preservedViewController) == type(of: viewController) }
+            if let preservedViewController = filtered.last {
+                viewControllers = viewControllers.filter { subViewController in subViewController !== preservedViewController }
+                if SideMenuManager.menuPushStyle == .preserveAndHideBackButton {
+                    preservedViewController.navigationItem.hidesBackButton = true
+                }
                 viewControllers.append(preservedViewController)
                 navigationController.setViewControllers(viewControllers, animated: animated)
                 CATransaction.commit()
                 return
             }
-            navigationController.pushViewController(viewController, animated: animated)
+            if SideMenuManager.menuPushStyle == .preserveAndHideBackButton {
+                viewController.navigationItem.hidesBackButton = true
+            }
+        case .replace:
+            viewController.navigationItem.hidesBackButton = true
+            navigationController.setViewControllers([viewController], animated: animated)
             CATransaction.commit()
             return
         }
         
-        if SideMenuManager.menuReplaceOnPush {
-            var viewControllers = navigationController.viewControllers
-            viewControllers.removeLast()
-            viewControllers.append(viewController)
-            navigationController.setViewControllers(viewControllers, animated: animated)
-            CATransaction.commit()
-            return
-        }
-        
-        if let lastViewController = navigationController.viewControllers.last, !SideMenuManager.menuAllowPushOfSameClassTwice && type(of: lastViewController) == type(of: viewController) {
-            CATransaction.commit()
-            return
-        }
-
         navigationController.pushViewController(viewController, animated: animated)
         CATransaction.commit()
     }

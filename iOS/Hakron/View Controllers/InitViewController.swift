@@ -81,7 +81,7 @@ class InitViewController: UIViewController {
         SideMenuManager.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
         SideMenuManager.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
         SideMenuManager.menuFadeStatusBar = false
-        SideMenuManager.menuPreserveViewOnPush = true
+        SideMenuManager.menuPushStyle = .preserveAndHideBackButton
     }
     
     override func didReceiveMemoryWarning() {

@@ -18,7 +18,7 @@
 		0A9B1DCE1E281E070036E9B2 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9B1DC81E281E070036E9B2 /* MenuViewController.swift */; };
 		0A9B1DCF1E281E070036E9B2 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9B1DC91E281E070036E9B2 /* ScheduleViewController.swift */; };
 		0A9B1DD21E281E0C0036E9B2 /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9B1DD11E281E0C0036E9B2 /* MenuItem.swift */; };
-		60A7C978914152F46C4DAFEC /* Pods_Hakron.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8278E6351DA84419CC28913B /* Pods_Hakron.framework */; };
+		F3B96972232B79A022C0B202 /* Pods_Hakron.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0DBDBD2CC44E995B8E274C1 /* Pods_Hakron.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,9 +35,9 @@
 		0A9B1DC81E281E070036E9B2 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		0A9B1DC91E281E070036E9B2 /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		0A9B1DD11E281E0C0036E9B2 /* MenuItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
-		8278E6351DA84419CC28913B /* Pods_Hakron.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hakron.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B7256734953EAD9B18BE02A /* Pods-Hakron.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hakron.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hakron/Pods-Hakron.debug.xcconfig"; sourceTree = "<group>"; };
-		F993F03D9BDAF6BA02FFC58F /* Pods-Hakron.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hakron.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hakron/Pods-Hakron.release.xcconfig"; sourceTree = "<group>"; };
+		11053097E0EEAA2001A7D21E /* Pods-Hakron.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hakron.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hakron/Pods-Hakron.debug.xcconfig"; sourceTree = "<group>"; };
+		D0DBDBD2CC44E995B8E274C1 /* Pods_Hakron.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hakron.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D3619DAFB10F4C6A2BE9DBAC /* Pods-Hakron.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hakron.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hakron/Pods-Hakron.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +45,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60A7C978914152F46C4DAFEC /* Pods_Hakron.framework in Frameworks */,
+				F3B96972232B79A022C0B202 /* Pods_Hakron.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,8 +57,8 @@
 			children = (
 				0A9B1DAD1E281CCB0036E9B2 /* Hakron */,
 				0A9B1DAC1E281CCB0036E9B2 /* Products */,
-				BD760311079ED64A38D3F3DB /* Pods */,
-				28DC313E413835F5B6C9615A /* Frameworks */,
+				A25E7BABA3B4E055C0B9F3A6 /* Pods */,
+				47E33AC9318811168BC14462 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,19 +105,19 @@
 			path = Templates;
 			sourceTree = "<group>";
 		};
-		28DC313E413835F5B6C9615A /* Frameworks */ = {
+		47E33AC9318811168BC14462 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8278E6351DA84419CC28913B /* Pods_Hakron.framework */,
+				D0DBDBD2CC44E995B8E274C1 /* Pods_Hakron.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BD760311079ED64A38D3F3DB /* Pods */ = {
+		A25E7BABA3B4E055C0B9F3A6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8B7256734953EAD9B18BE02A /* Pods-Hakron.debug.xcconfig */,
-				F993F03D9BDAF6BA02FFC58F /* Pods-Hakron.release.xcconfig */,
+				11053097E0EEAA2001A7D21E /* Pods-Hakron.debug.xcconfig */,
+				D3619DAFB10F4C6A2BE9DBAC /* Pods-Hakron.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -129,12 +129,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0A9B1DBD1E281CCB0036E9B2 /* Build configuration list for PBXNativeTarget "Hakron" */;
 			buildPhases = (
-				1E610B2FD9BB458806F326DF /* [CP] Check Pods Manifest.lock */,
+				EED8AB5F6AFE289DADDA2462 /* [CP] Check Pods Manifest.lock */,
 				0A9B1DA71E281CCB0036E9B2 /* Sources */,
 				0A9B1DA81E281CCB0036E9B2 /* Frameworks */,
 				0A9B1DA91E281CCB0036E9B2 /* Resources */,
-				BA517F690353906FFDA8227E /* [CP] Embed Pods Frameworks */,
-				0B13D43B345B849FFF60085A /* [CP] Copy Pods Resources */,
+				F7BA561044619CB94BAA4821 /* [CP] Embed Pods Frameworks */,
+				AC3428A8642CE90E1950518F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -194,7 +194,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0B13D43B345B849FFF60085A /* [CP] Copy Pods Resources */ = {
+		AC3428A8642CE90E1950518F /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -209,7 +209,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hakron/Pods-Hakron-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		1E610B2FD9BB458806F326DF /* [CP] Check Pods Manifest.lock */ = {
+		EED8AB5F6AFE289DADDA2462 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -224,7 +224,7 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		BA517F690353906FFDA8227E /* [CP] Embed Pods Frameworks */ = {
+		F7BA561044619CB94BAA4821 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -374,7 +374,7 @@
 		};
 		0A9B1DBE1E281CCB0036E9B2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8B7256734953EAD9B18BE02A /* Pods-Hakron.debug.xcconfig */;
+			baseConfigurationReference = 11053097E0EEAA2001A7D21E /* Pods-Hakron.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 463X4DVTMN;
@@ -388,7 +388,7 @@
 		};
 		0A9B1DBF1E281CCB0036E9B2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F993F03D9BDAF6BA02FFC58F /* Pods-Hakron.release.xcconfig */;
+			baseConfigurationReference = D3619DAFB10F4C6A2BE9DBAC /* Pods-Hakron.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 463X4DVTMN;
